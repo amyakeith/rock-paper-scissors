@@ -1,5 +1,9 @@
 // establish results div variable to attach things to it
 const resultsDiv = document.querySelector(".results");
+const userScr = document.querySelector("#userScore");
+const compScr = document.querySelector("#computerScore");
+const gameOver = document.createElement("p");
+var scoreUser = 0; scoreComputer = 0;
 
 // create a p element to show the user's selection
 function addUserMove(text)
@@ -99,9 +103,16 @@ function winner(text) {
 }
 
 // display user score
+function displayUserScore(score1)
+{
+  userScr.textContent = score1;
+}
 
 // display computer score
-
+function displayComputerScore(score2)
+{
+  compScr.textContent = score2;
+}
 
 // compare user's choice to computer's choice
 function determineWinner(user, computer)
@@ -115,10 +126,12 @@ function determineWinner(user, computer)
     // if computer chose PAPER
     else if (computer == 2) {
       winner("i win!");
+      scoreComputer += 1;
     }
     // if computer chose SCISSORS
     else {
       winner("you win!");
+      scoreUser += 1;
     }
   }
   // if user chose PAPER
@@ -126,6 +139,7 @@ function determineWinner(user, computer)
     // if computer chose ROCK
     if (computer == 1) {
       winner("you win!")
+      scoreUser += 1;
     }
     // if computer chose PAPER
     else if (computer == 2) {
@@ -134,6 +148,7 @@ function determineWinner(user, computer)
     // if computer chose SCISSORS
     else {
       winner("i win!");
+      scoreComputer += 1;
     }
   }
   // if user chose SCISSORS
@@ -142,25 +157,41 @@ function determineWinner(user, computer)
     // if computer chose ROCK
     if (computer == 1) {
       winner("i win!");
+      scoreComputer += 1;
     }
     // if computer chose PAPER
     else if (computer == 2)
     {
       winner("you win!");
+      scoreUser += 1;
     }
     // if computer chose SCISSORS
     else {
       winner("it's a tie!");
     }
   }
+  displayUserScore(scoreUser);
+  displayComputerScore(scoreComputer);
 }
 
 function game(btnID)
 {
+  if (scoreUser == 5 || scoreComputer == 5)
+  {
+    scoreUser = 0;
+    scoreComputer = 0;
+    // give it a classname
+    gameOver.classList.add("gameOver");
+    // give it text
+    gameOver.textContent = "game over! select a move to play again.";
+    // append it to the results div
+    resultsDiv.appendChild(gameOver);
+  }
   while (resultsDiv.firstChild)
   {
       resultsDiv.removeChild(resultsDiv.firstChild);
   }
+  // clear any existing children in resultsDiv
   var user = playerSelection(btnID);
   displayUser(user);
   var comp = computerPlay();
@@ -177,5 +208,4 @@ function clickEvent() {
 }
 
 
-
-// BE SURE TO CLEAR CHILD NODES AFTER EACH GAME!!!
+clickEvent();

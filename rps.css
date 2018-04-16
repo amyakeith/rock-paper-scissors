@@ -78,3 +78,8 @@ button:active, button:focus {
   font-size: 18px;
   display: inline;
 }
+
+.scoreReset {
+  font-size: 18px;
+  margin: 10px;
+}
